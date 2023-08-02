@@ -19,8 +19,12 @@ class Login(View):
         if customer:
             flag = check_password (password, customer.password)
             if flag:
-                request.session['customer'] = customer.id
-
+                # Retrieve the customer's first name and store it in the session
+                customer_first_name = customer.first_name
+                request.session['customer'] = {
+                    'id': customer.id,
+                    'first_name': customer_first_name  # Store the first name in the session
+                }
                 if Login.return_url:
                     return HttpResponseRedirect (Login.return_url)
                 else:
